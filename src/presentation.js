@@ -14,6 +14,9 @@ import {
   Text,
 } from 'spectacle';
 
+import SyntaxHighlighter from 'react-syntax-highlighter';
+import { dark } from 'react-syntax-highlighter/dist/esm/styles/prism';
+
 // Import theme
 import createTheme from 'spectacle/lib/themes/default';
 
@@ -109,10 +112,31 @@ export default class Presentation extends React.Component {
         </Slide>
         <CompareWithTesting/>
         <CompareWithBeing10x/>
+        <ErrorChecking code={errorCheckingCode} langauge="js"/>
+        <ErrorChecking code={eliteHaskell} langauge="haskell"/>
+
       </Deck>
     );
   }
 }
+
+const eliteHaskell = `userName :: Refined (SizeGreaterThan 0) String`
+
+const errorCheckingCode = `function renderUser(user) {
+  const userName = user && user.name && user.name.length > 0
+                 ?  user.name 
+                 :  "No name"
+ 
+  const horses = "yeah"
+  return userName + horses
+}`
+
+const ErrorChecking = ({code, language}) => (
+  <Slide transition={['fade']} bgColor="tertiary">
+    <SyntaxHighlighter language={language} style={dark}>{code}</SyntaxHighlighter>    
+  </Slide>
+)
+
 
 const ClassicList = () => (
 <Slide transition={['fade']} bgColor="tertiary">
